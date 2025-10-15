@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase/dist/pocketbase.umd.js"></script>
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NISPrep – Сообщить о проблеме</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">NISPrep</div>
+        <nav>
+            <a href="./about.html">О нас</a>
+            <a href="#"></a>
+        </nav>
+        
+       
+    </header>
+
+    <main class="report-section">
+        <div class="report-container">
+            <h2>Сообщить о проблеме</h2>
+            <p class="subtitle">Пожалуйста, подробно опишите возникшую ситуацию. Мы свяжемся с вами в ближайшее время.</p>
+            
+            <form id="reportForm">
+                <div class="input-group">
+                    <label for="reportEmail">Ваш Email (для обратной связи)</label>
+                    <input type="email" id="reportEmail" name="reportEmail" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reportType">Тип проблемы</label>
+                    <select id="reportType" name="reportType" required>
+                        <option value="" disabled selected>Выберите тип</option>
+                        <option value="bug">Техническая ошибка (Баг)</option>
+                        <option value="content">Ошибка в учебном контенте</option>
+                        <option value="login">Проблема с входом/аккаунтом</option>
+                        <option value="suggestion">Предложение по улучшению</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="reportDescription">Описание проблемы *</label>
+                    <textarea id="reportDescription" name="reportDescription" rows="6" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary report-submit-btn">Отправить сообщение</button>
+                <p id="reportMessage" class="message-text"></p>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 NISPrep. Все права защищены.</p>
+        <div class="social-links">
+            <a href="#">FAQ</a>
+            <a href="#">Конфиденциальность</a>
+            <a href="./report.html">Проблема? Сообщить о проблеме</a>
+        </div>
+    </footer>
+
+    <script src="report.js"></script>
+    <div id="loginModal" class="modal">
+        </div>
+</body>
+</html>
