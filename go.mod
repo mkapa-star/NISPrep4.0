@@ -1,17 +1,7 @@
-package main
+module pocketbase
 
-import (
-	"log"
-	"github.com/pocketbase/pocketbase"
-	
-	// ВАЖНАЯ СТРОКА: Регистрация миграций
-	_ "pocketbase/pb_migrations" 
+go 1.21
+
+require (
+	github.com/pocketbase/pocketbase v0.30.1
 )
-
-func main() {
-	app := pocketbase.New()
-
-	if err := app.Start(); err != nil {
-		log.Fatal(err)
-	}
-}
