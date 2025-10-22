@@ -1,11 +1,12 @@
-package mainpackage main
+package mainpackage mainpackage main
 
 import (
 	"log"
 	"github.com/pocketbase/pocketbase"
 	
-	// ВАЖНАЯ СТРОКА: Регистрация миграций
-	_ "./pb_migrations" // Используем относительный путь
+	// ЭТА СТРОКА РЕГИСТРИРУЕТ ВАШИ МИГРАЦИИ
+	// (Используем имя вашего модуля 'pocketbase')
+	_ "pocketbase/pb_migrations" 
 )
 
 func main() {
