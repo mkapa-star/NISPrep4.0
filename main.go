@@ -5,7 +5,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	
 	// Теперь Go знает, что это нужно заменить на локальную папку
-	_ "pocketbase/pb_migrations" 
+	_ "pocketbase/pb_migrations"
 )
 
 func main() {
@@ -15,3 +15,4 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
