@@ -1,11 +1,11 @@
-package main
+package mainpackage main
 
 import (
 	"log"
 	"github.com/pocketbase/pocketbase"
 	
-	// ВАЖНАЯ СТРОКА: Регистрация миграций при сборке
-	_ "pocketbase/pb_migrations" 
+	// ВАЖНАЯ СТРОКА: Регистрация миграций
+	_ "./pb_migrations" // Используем относительный путь
 )
 
 func main() {
