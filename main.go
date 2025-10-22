@@ -1,11 +1,9 @@
-package mainpackage mainpackage main
+package mainpackage mainpackage mainpackage main
 
 import (
 	"log"
 	"github.com/pocketbase/pocketbase"
 	
-	// ЭТА СТРОКА РЕГИСТРИРУЕТ ВАШИ МИГРАЦИИ
-	// (Используем имя вашего модуля 'pocketbase')
 	_ "pocketbase/pb_migrations" 
 )
 
