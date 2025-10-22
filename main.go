@@ -4,7 +4,7 @@ import (
 	"log"
 	"github.com/pocketbase/pocketbase"
 	
-	_ "pocketbase/pb_migrations" 
+	_ "./pb_migrations" 
 )
 
 func main() {
@@ -14,4 +14,5 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
 
