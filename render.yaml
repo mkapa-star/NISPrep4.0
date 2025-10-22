@@ -1,0 +1,18 @@
+services:
+- type: web
+  name: pocketbase-service
+  env: go
+  buildCommand: |
+    # 1. Скачать официальный бинарник PocketBase (Linux AMD64)
+    wget -q https://github.com/pocketbase/pocketbase/releases/download/v0.22.10/pocketbase_0.22.10_linux_amd64.zip -O pocketbase.zip
+    unzip pocketbase.zip
+    
+    # 2. Убедиться, что бинарник исполняемый
+    chmod +x pocketbase
+    
+    # 3. Применить миграции (теперь эта команда сработает!)
+    ./pocketbase migrate up
+  startCommand: ./pocketbase serve --http=0.0.0.0:$PORT
+  envVars:
+    - key: DATABASE_URL
+      value: pocketbase.db
