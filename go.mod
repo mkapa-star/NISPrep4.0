@@ -1,7 +1,17 @@
-module pocketbase
+package main
 
-go 1.21
-
-require (
-	github.com/pocketbase/pocketbase v0.22.10 // Используйте последнюю версию PocketBase
+import (
+	"log"
+	"github.com/pocketbase/pocketbase"
+	
+	// ВАЖНАЯ СТРОКА: Регистрация миграций
+	_ "pocketbase/pb_migrations" 
 )
+
+func main() {
+	app := pocketbase.New()
+
+	if err := app.Start(); err != nil {
+		log.Fatal(err)
+	}
+}
