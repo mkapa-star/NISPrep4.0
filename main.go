@@ -1,4 +1,4 @@
-package mainpackage mainpackage mainpackage main
+package main
 
 import (
 	"log"
@@ -14,3 +14,4 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
