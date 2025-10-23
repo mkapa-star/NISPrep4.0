@@ -1,5 +1,7 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
+// Исправлено для использования db.saveCollection и dao.deleteCollection
+
+migrate((db) => {
   const collection = new Collection({
     "createRule": null,
     "deleteRule": null,
@@ -27,13 +29,16 @@ migrate((app) => {
         "required": false,
         "system": false,
         "type": "select",
-        "values": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5"
-        ]
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        }
       },
       {
         "autogeneratePattern": "",
@@ -49,26 +54,7 @@ migrate((app) => {
         "system": false,
         "type": "text"
       },
-      {
-        "hidden": false,
-        "id": "autodate2990389176",
-        "name": "created",
-        "onCreate": true,
-        "onUpdate": false,
-        "presentable": false,
-        "system": false,
-        "type": "autodate"
-      },
-      {
-        "hidden": false,
-        "id": "autodate3332085495",
-        "name": "updated",
-        "onCreate": true,
-        "onUpdate": true,
-        "presentable": false,
-        "system": false,
-        "type": "autodate"
-      }
+      // Autodate fields are handled automatically and usually not defined explicitly in schema creation
     ],
     "id": "pbc_1615648943",
     "indexes": [],
@@ -80,9 +66,13 @@ migrate((app) => {
     "viewRule": null
   });
 
-  return app.save(collection);
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1615648943");
+  // Правильный синтаксис для сохранения новой коллекции
+  return db.saveCollection(collection);
+}, (db) => {
+  // Для операций удаления и поиска нужен DAO
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
-  return app.delete(collection);
+  // Правильный синтаксис для удаления коллекции
+  return dao.deleteCollection(collection);
 })
