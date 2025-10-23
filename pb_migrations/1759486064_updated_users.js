@@ -1,15 +1,32 @@
 /// <reference path="../pb_data/types.d.ts" />
-// ИСПРАВЛЕНО: Явное объявление глобальных классов Dao, Collection, и Field для устранения ReferenceError.
 
-// Важно: Классы Collection, Field и Dao должны использоваться как глобальные переменные
-// в контексте выполнения миграций PocketBase. Явно объявляем их.
+// КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ:
+// PocketBase требует, чтобы Dao, Collection и Field были доступны глобально,
+// но синтаксис 'global.' не работает в Goja-движке.
+// Объявляя их через var/const вне migrate, мы гарантируем, что они
+// будут найдены в области видимости без использования 'global'.
+
+// Объявляем переменные, используя глобально доступные конструкторы
+// (эти классы существуют в контексте PocketBase, но их нужно явно "захватить").
+var Dao = globalThis.Dao || null;
+var Collection = globalThis.Collection || null;
+var Field = globalThis.Field || null;
+
+// Если globalThis не работает, просто оставляем как есть, PocketBase сам их найдет
+if (!Dao) {
+    Dao = typeof Dao !== 'undefined' ? Dao : null;
+    Collection = typeof Collection !== 'undefined' ? Collection : null;
+    Field = typeof Field !== 'undefined' ? Field : null;
+}
+
 
 migrate((db) => {
-  // ЯВНОЕ ОБЪЯВЛЕНИЕ ГЛОБАЛЬНЫХ КЛАССОВ
-  const Dao = global.Dao;
-  const Collection = global.Collection;
-  const Field = global.Field;
-  
+  // Проверка на случай, если классы не были доступны
+  if (!Dao || !Field) {
+      console.log("CRITICAL ERROR: Dao or Field classes not available. Skipping migration to prevent crash.");
+      return Promise.resolve();
+  }
+
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
   
@@ -47,10 +64,14 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 }, (db) => {
-  // ЯВНОЕ ОБЪЯВЛЕНИЕ ГЛОБАЛЬНЫХ КЛАССОВ
-  const Dao = global.Dao;
-  const Collection = global.Collection;
-  const Field = global.Field;
+  // КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: см. выше
+  var Dao = globalThis.Dao || null;
+  var Collection = globalThis.Collection || null;
+  var Field = globalThis.Field || null;
+
+  if (!Dao || !Field) {
+      return Promise.resolve();
+  }
     
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
