@@ -1,9 +1,13 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1615648943")
+// Исправлено для использования dao (Data Access Object)
+
+migrate((db) => {
+  const dao = new Dao(db);
+  // Поиск коллекции через dao
+  const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
   // add field
-  collection.fields.addAt(3, new Field({
+  collection.fields.add(new Field({
     "exceptDomains": [],
     "hidden": false,
     "id": "email3885137012",
@@ -12,15 +16,23 @@ migrate((app) => {
     "presentable": false,
     "required": false,
     "system": false,
-    "type": "email"
-  }))
+    "type": "email",
+    "options": {
+      "exceptDomains": [],
+      "onlyDomains": []
+    }
+  }));
 
-  return app.save(collection)
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1615648943")
+  // Сохранение коллекции через dao
+  return dao.saveCollection(collection);
+}, (db) => {
+  const dao = new Dao(db);
+  // Поиск коллекции через dao
+  const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
   // remove field
-  collection.fields.removeById("email3885137012")
+  collection.fields.removeById("email3885137012");
 
-  return app.save(collection)
+  // Сохранение коллекции через dao
+  return dao.saveCollection(collection);
 })
