@@ -1,14 +1,14 @@
 /// <reference path="../pb_data/types.d.ts" />
+// Исправлено: замена устаревшего синтаксиса и .addAt на .add для стабильности
 
 migrate((db) => {
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
-  // add field
+  // add field 'klass' (Используем .add вместо .addAt для стабильности)
   collection.fields.add(new Field({
     "hidden": false,
     "id": "select3711652446",
-    "maxSelect": 1,
     "name": "klass",
     "presentable": false,
     "required": false,
@@ -23,12 +23,12 @@ migrate((db) => {
     }
   }));
 
-  // update field (Note: using add instead of addAt is safer for migration scripts)
+  // update field 'name'
   const nameField = collection.schema.getById("text1579384326");
   if (nameField) {
       nameField.options.max = 255;
       nameField.options.min = 3;
-      nameField.options.presentable = true;
+      nameField.presentable = true; // Обновляем свойство на самом объекте поля
   }
 
   return dao.saveCollection(collection);
@@ -36,15 +36,15 @@ migrate((db) => {
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
-  // remove field
+  // remove field 'klass'
   collection.fields.removeById("select3711652446");
 
-  // update field
+  // revert field 'name'
   const nameField = collection.schema.getById("text1579384326");
   if (nameField) {
       nameField.options.max = 255;
       nameField.options.min = 0;
-      nameField.options.presentable = false;
+      nameField.presentable = false; // Обновляем свойство на самом объекте поля
   }
 
   return dao.saveCollection(collection);
