@@ -1,5 +1,6 @@
 /// <reference path="../pb_data/types.d.ts" />
 // Исправлено: Структура миграции приведена к рабочему виду (используется 'schema' вместо 'fields').
+// ВНИМАНИЕ: Используется универсальный синтаксис db.dao().saveCollection() для обхода ошибок совместимости версий.
 
 migrate((db) => {
   // Правильный синтаксис для сохранения коллекции в PocketBase 0.22+
@@ -47,14 +48,13 @@ migrate((db) => {
     ]
   });
 
-  // Правильный синтаксис для сохранения новой коллекции
-  return db.saveCollection(collection);
+  // !!! КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем db.dao().saveCollection для максимальной совместимости
+  return db.dao().saveCollection(collection);
 }, (db) => {
   // Для операций удаления и поиска нужен DAO
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
-  // Гарантируем, что dao.deleteCollection() вызывается корректно
-  // (dao.deleteCollection принимает объект Collection)
+  // Используем dao.deleteCollection для DOWN миграции
   return dao.deleteCollection(collection);
 })
