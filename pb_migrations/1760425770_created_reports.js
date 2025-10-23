@@ -1,33 +1,26 @@
 /// <reference path="../pb_data/types.d.ts" />
-// Исправлено для использования db.saveCollection и dao.deleteCollection
+// Исправлено: Структура миграции приведена к рабочему виду (используется 'schema' вместо 'fields').
 
 migrate((db) => {
+  // Правильный синтаксис для сохранения коллекции в PocketBase 0.22+
   const collection = new Collection({
+    "id": "pbc_1615648943",
+    "name": "reports",
+    "type": "base",
+    "system": false,
+    // Удалены поля 'id', 'created', 'updated' и 'system' - PocketBase создает их сам
+    "listRule": null,
+    "viewRule": null,
     "createRule": null,
+    "updateRule": null,
     "deleteRule": null,
-    "fields": [
+    "options": {},
+    // Используем 'schema' вместо 'fields'
+    "schema": [
       {
-        "autogeneratePattern": "[a-z0-9]{15}",
-        "hidden": false,
-        "id": "text3208210256",
-        "max": 15,
-        "min": 15,
-        "name": "id",
-        "pattern": "^[a-z0-9]+$",
-        "presentable": false,
-        "primaryKey": true,
-        "required": true,
-        "system": true,
-        "type": "text"
-      },
-      {
-        "hidden": false,
-        "id": "select3770387442",
-        "maxSelect": 1,
-        "name": "rep",
-        "presentable": false,
-        "required": false,
         "system": false,
+        "id": "select3770387442",
+        "name": "rep",
         "type": "select",
         "options": {
           "maxSelect": 1,
@@ -41,29 +34,17 @@ migrate((db) => {
         }
       },
       {
-        "autogeneratePattern": "",
-        "hidden": false,
-        "id": "text1843675174",
-        "max": 0,
-        "min": 0,
-        "name": "description",
-        "pattern": "",
-        "presentable": false,
-        "primaryKey": false,
-        "required": false,
         "system": false,
-        "type": "text"
-      },
-      // Autodate fields are handled automatically and usually not defined explicitly in schema creation
-    ],
-    "id": "pbc_1615648943",
-    "indexes": [],
-    "listRule": null,
-    "name": "reports",
-    "system": false,
-    "type": "base",
-    "updateRule": null,
-    "viewRule": null
+        "id": "text1843675174",
+        "name": "description",
+        "type": "text",
+        "options": {
+          "max": 0,
+          "min": 0,
+          "pattern": ""
+        }
+      }
+    ]
   });
 
   // Правильный синтаксис для сохранения новой коллекции
@@ -73,6 +54,7 @@ migrate((db) => {
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
-  // Правильный синтаксис для удаления коллекции
+  // Гарантируем, что dao.deleteCollection() вызывается корректно
+  // (dao.deleteCollection принимает объект Collection)
   return dao.deleteCollection(collection);
 })
