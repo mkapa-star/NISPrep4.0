@@ -2,6 +2,10 @@
 // Исправлено: Удалено ошибочное поле 'klass'. Используется Dao и collection.schema.
 
 migrate((db) => {
+  // --- ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ: Объявляем классы явно ---
+  const Dao = global.Dao;
+  const Field = global.Field;
+  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
@@ -25,6 +29,9 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 }, (db) => {
+  // --- ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ: Объявляем классы явно ---
+  const Dao = global.Dao;
+  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
