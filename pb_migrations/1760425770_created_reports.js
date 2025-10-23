@@ -1,8 +1,10 @@
 /// <reference path="../pb_data/types.d.ts" />
-// Исправлено: Убрана любая ссылка на db.dao() в UP миграции.
+// КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем явное создание Dao в обеих функциях для обхода ошибок совместимости.
 
 migrate((db) => {
   // UP миграция (создание коллекции)
+  const dao = new Dao(db); // Явное создание DAO
+  
   const collection = new Collection({
     "id": "pbc_1615648943",
     "name": "reports",
@@ -45,8 +47,8 @@ migrate((db) => {
     ]
   });
 
-  // !!! КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Вызываем db.saveCollection напрямую, без db.dao()
-  return db.saveCollection(collection);
+  // !!! КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем dao.saveCollection
+  return dao.saveCollection(collection);
 }, (db) => {
   // DOWN миграция (удаление коллекции)
   // Для удаления коллекции требуется DAO
