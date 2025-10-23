@@ -1,5 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
-// ИСПРАВЛЕНО: Использование collection.schema для добавления/удаления полей.
+// ИСПРАВЛЕНО: Добавлена проверка существования коллекции users.
 
 migrate((db) => {
   // АБСОЛЮТНО НЕОБХОДИМЫЕ ОБЪЯВЛЕНИЯ ДЛЯ РАБОТЫ В КОНТЕКСТЕ PB
@@ -9,8 +9,14 @@ migrate((db) => {
   
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
+  
+  // КРИТИЧНО: Если коллекция users еще не создана (нет админа), пропускаем этот шаг.
+  if (!collection) {
+      console.log("Collection 'users' not found. Skipping migration.");
+      return Promise.resolve();
+  }
 
-  // 1. Добавление поля 'klass' (Используем .schema.add вместо .fields.add)
+  // 1. Добавление поля 'klass'
   collection.schema.add(new Field({
     "hidden": false,
     "id": "select3711652446",
@@ -46,6 +52,11 @@ migrate((db) => {
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
+  // КРИТИЧНО: Если коллекции users нет, пропускаем откат.
+  if (!collection) {
+      return Promise.resolve();
+  }
+  
   // 1. Удаление поля 'klass'
   collection.schema.removeField("select3711652446");
 
@@ -59,5 +70,4 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 })
-
 
