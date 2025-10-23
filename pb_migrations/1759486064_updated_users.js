@@ -1,10 +1,15 @@
 /// <reference path="../pb_data/types.d.ts" />
-// ИСПРАВЛЕНО: УДАЛЕНЫ require-вызовы. Классы Collection, Field, Dao теперь используются как глобальные.
+// ИСПРАВЛЕНО: Явное объявление глобальных классов Dao, Collection, и Field для устранения ReferenceError.
 
 // Важно: Классы Collection, Field и Dao должны использоваться как глобальные переменные
-// в контексте выполнения миграций PocketBase. Вызовы require(...) ломают модуль.
+// в контексте выполнения миграций PocketBase. Явно объявляем их.
 
 migrate((db) => {
+  // ЯВНОЕ ОБЪЯВЛЕНИЕ ГЛОБАЛЬНЫХ КЛАССОВ
+  const Dao = global.Dao;
+  const Collection = global.Collection;
+  const Field = global.Field;
+  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
   
@@ -42,6 +47,11 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 }, (db) => {
+  // ЯВНОЕ ОБЪЯВЛЕНИЕ ГЛОБАЛЬНЫХ КЛАССОВ
+  const Dao = global.Dao;
+  const Collection = global.Collection;
+  const Field = global.Field;
+    
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
@@ -63,15 +73,3 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 })
-
-
-
-
-
-
-
-
-
-
-
-
