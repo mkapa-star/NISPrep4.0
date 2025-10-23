@@ -1,12 +1,10 @@
 /// <reference path="../pb_data/types.d.ts" />
-// ИСПРАВЛЕНО: Добавлена проверка существования коллекции users.
+// ИСПРАВЛЕНО: УДАЛЕНЫ require-вызовы. Классы Collection, Field, Dao теперь используются как глобальные.
+
+// Важно: Классы Collection, Field и Dao должны использоваться как глобальные переменные
+// в контексте выполнения миграций PocketBase. Вызовы require(...) ломают модуль.
 
 migrate((db) => {
-  // АБСОЛЮТНО НЕОБХОДИМЫЕ ОБЪЯВЛЕНИЯ ДЛЯ РАБОТЫ В КОНТЕКСТЕ PB
-  const Dao = require('pocketbase/lib/backends/sqlite').Dao;
-  const Collection = require('pocketbase/lib/models/Collection').default;
-  const Field = require('pocketbase/lib/models/SchemaField').default;
-  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
   
@@ -44,11 +42,6 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 }, (db) => {
-  // АБСОЛЮТНО НЕОБХОДИМЫЕ ОБЪЯВЛЕНИЯ ДЛЯ РАБОТЫ В КОНТЕКСТЕ PB
-  const Dao = require('pocketbase/lib/backends/sqlite').Dao;
-  const Collection = require('pocketbase/lib/models/Collection').default;
-  const Field = require('pocketbase/lib/models/SchemaField').default;
-  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
@@ -70,4 +63,15 @@ migrate((db) => {
 
   return dao.saveCollection(collection);
 })
+
+
+
+
+
+
+
+
+
+
+
 
