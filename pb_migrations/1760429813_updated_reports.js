@@ -1,16 +1,11 @@
 /// <reference path="../pb_data/types.d.ts" />
-// Исправлено: Удалено ошибочное поле 'klass'. Используется Dao и collection.schema.
+// ФИНАЛЬНЫЙ ЧИСТЫЙ КОД: Добавление поля email.
 
 migrate((db) => {
-  // --- ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ: Объявляем классы явно ---
-  const Dao = global.Dao;
-  const Field = global.Field;
-  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
   // --- UP: Добавление поля 'email' ---
-  // Это поле, относящееся к отчету, остается
   collection.schema.add(new Field({
     "hidden": false,
     "id": "email3885137012",
@@ -25,20 +20,13 @@ migrate((db) => {
     }
   }));
 
-  // !!! ПОЛЕ 'KLASS' УДАЛЕНО - ОНО ПРИНАДЛЕЖИТ КОЛЛЕКЦИИ USERS !!!
-
   return dao.saveCollection(collection);
 }, (db) => {
-  // --- ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ: Объявляем классы явно ---
-  const Dao = global.Dao;
-  
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
   // --- DOWN: Удаление поля 'email' ---
   collection.schema.removeField("email3885137012");
-
-  // !!! ПОЛЕ 'KLASS' УДАЛЕНО - ОНО ПРИНАДЛЕЖИТ КОЛЛЕКЦИИ USERS !!!
 
   return dao.saveCollection(collection);
 })
