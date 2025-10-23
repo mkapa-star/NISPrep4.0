@@ -1,18 +1,16 @@
 /// <reference path="../pb_data/types.d.ts" />
-// Исправлено для использования dao (Data Access Object)
+// Исправлено: Удалено ошибочное поле 'klass'. Используется Dao и collection.schema.
 
 migrate((db) => {
   const dao = new Dao(db);
-  // Поиск коллекции через dao
-  const collection = dao.findCollectionByNameOrId("pbc_1615648943");
+  const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
-  // add field
-  collection.fields.add(new Field({
-    "exceptDomains": [],
+  // --- UP: Добавление поля 'email' ---
+  // Это поле, относящееся к отчету, остается
+  collection.schema.add(new Field({
     "hidden": false,
     "id": "email3885137012",
     "name": "email",
-    "onlyDomains": [],
     "presentable": false,
     "required": false,
     "system": false,
@@ -23,16 +21,17 @@ migrate((db) => {
     }
   }));
 
-  // Сохранение коллекции через dao
+  // !!! ПОЛЕ 'KLASS' УДАЛЕНО - ОНО ПРИНАДЛЕЖИТ КОЛЛЕКЦИИ USERS !!!
+
   return dao.saveCollection(collection);
 }, (db) => {
   const dao = new Dao(db);
-  // Поиск коллекции через dao
-  const collection = dao.findCollectionByNameOrId("pbc_1615648943");
+  const collection = dao.findCollectionByNameOrId("pbc_1615648943"); // reports collection ID
 
-  // remove field
-  collection.fields.removeById("email3885137012");
+  // --- DOWN: Удаление поля 'email' ---
+  collection.schema.removeField("email3885137012");
 
-  // Сохранение коллекции через dao
+  // !!! ПОЛЕ 'KLASS' УДАЛЕНО - ОНО ПРИНАДЛЕЖИТ КОЛЛЕКЦИИ USERS !!!
+
   return dao.saveCollection(collection);
 })
