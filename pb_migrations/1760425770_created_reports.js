@@ -1,22 +1,19 @@
 /// <reference path="../pb_data/types.d.ts" />
-// Исправлено: Структура миграции приведена к рабочему виду (используется 'schema' вместо 'fields').
-// ВНИМАНИЕ: Используется универсальный синтаксис db.dao().saveCollection() для обхода ошибок совместимости версий.
+// Исправлено: Убрана любая ссылка на db.dao() в UP миграции.
 
 migrate((db) => {
-  // Правильный синтаксис для сохранения коллекции в PocketBase 0.22+
+  // UP миграция (создание коллекции)
   const collection = new Collection({
     "id": "pbc_1615648943",
     "name": "reports",
     "type": "base",
     "system": false,
-    // Удалены поля 'id', 'created', 'updated' и 'system' - PocketBase создает их сам
     "listRule": null,
     "viewRule": null,
     "createRule": null,
     "updateRule": null,
     "deleteRule": null,
     "options": {},
-    // Используем 'schema' вместо 'fields'
     "schema": [
       {
         "system": false,
@@ -48,13 +45,14 @@ migrate((db) => {
     ]
   });
 
-  // !!! КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем db.dao().saveCollection для максимальной совместимости
-  return db.dao().saveCollection(collection);
+  // !!! КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Вызываем db.saveCollection напрямую, без db.dao()
+  return db.saveCollection(collection);
 }, (db) => {
-  // Для операций удаления и поиска нужен DAO
+  // DOWN миграция (удаление коллекции)
+  // Для удаления коллекции требуется DAO
   const dao = new Dao(db);
   const collection = dao.findCollectionByNameOrId("pbc_1615648943");
 
-  // Используем dao.deleteCollection для DOWN миграции
+  // Используем dao.deleteCollection
   return dao.deleteCollection(collection);
 })
