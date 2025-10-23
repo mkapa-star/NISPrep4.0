@@ -1,7 +1,6 @@
 // Инициализация PocketBase
-const PB_URL = 'https://nis-prep.pockethost.io/'; 
-const pb = new PocketBase(PB_URL);
-
+const PB_URL = 'https://nisprep4-0.onrender.com/'; 
+    const pb = new PocketBase(PB_URL);
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------
     // Логика модального окна входа (Login Modal)
@@ -84,4 +83,5 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Начать бесплатно нажато!');
         });
     }
+
 });
