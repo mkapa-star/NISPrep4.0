@@ -1,9 +1,11 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
+
+migrate((db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
   // add field
-  collection.fields.addAt(8, new Field({
+  collection.fields.add(new Field({
     "hidden": false,
     "id": "select3711652446",
     "maxSelect": 1,
@@ -12,50 +14,38 @@ migrate((app) => {
     "required": false,
     "system": false,
     "type": "select",
-    "values": [
-      "6 класс",
-      "9-10класс"
-    ]
-  }))
+    "options": {
+      "maxSelect": 1,
+      "values": [
+        "6 класс",
+        "9-10класс"
+      ]
+    }
+  }));
 
-  // update field
-  collection.fields.addAt(6, new Field({
-    "autogeneratePattern": "",
-    "hidden": false,
-    "id": "text1579384326",
-    "max": 255,
-    "min": 3,
-    "name": "name",
-    "pattern": "",
-    "presentable": true,
-    "primaryKey": false,
-    "required": false,
-    "system": false,
-    "type": "text"
-  }))
+  // update field (Note: using add instead of addAt is safer for migration scripts)
+  const nameField = collection.schema.getById("text1579384326");
+  if (nameField) {
+      nameField.options.max = 255;
+      nameField.options.min = 3;
+      nameField.options.presentable = true;
+  }
 
-  return app.save(collection)
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
+  return dao.saveCollection(collection);
+}, (db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("_pb_users_auth_");
 
   // remove field
-  collection.fields.removeById("select3711652446")
+  collection.fields.removeById("select3711652446");
 
   // update field
-  collection.fields.addAt(6, new Field({
-    "autogeneratePattern": "",
-    "hidden": false,
-    "id": "text1579384326",
-    "max": 255,
-    "min": 0,
-    "name": "name",
-    "pattern": "",
-    "presentable": false,
-    "primaryKey": false,
-    "required": false,
-    "system": false,
-    "type": "text"
-  }))
+  const nameField = collection.schema.getById("text1579384326");
+  if (nameField) {
+      nameField.options.max = 255;
+      nameField.options.min = 0;
+      nameField.options.presentable = false;
+  }
 
-  return app.save(collection)
+  return dao.saveCollection(collection);
 })
