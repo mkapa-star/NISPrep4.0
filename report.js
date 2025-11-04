@@ -1,6 +1,8 @@
 // Инициализация PocketBase
+// ВАЖНО: Убедитесь, что PocketBase SDK подключен в HTML!
 const PB_URL = 'https://nisprep4-0.onrender.com/'; 
-    const pb = new PocketBase(PB_URL);
+const pb = new PocketBase(PB_URL);
+
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------
     // Логика модального окна входа (Login Modal)
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.querySelector('.btn-login');
     const closeBtn = document.querySelector('.modal-content .close-btn');
 
-    // Проверяем наличие элементов, так как модальное окно может быть только на главной
+    // Проверяем наличие элементов
     if (loginBtn) {
         loginBtn.onclick = function() {
             if (loginModal) {
@@ -20,7 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (closeBtn) {
         closeBtn.onclick = function() {
-            loginModal.style.display = 'none';
+            if (loginModal) {
+                loginModal.style.display = 'none';
+            }
         };
     }
 
@@ -40,37 +44,56 @@ document.addEventListener('DOMContentLoaded', () => {
         reportForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            reportMessage.classList.remove('error');
-            reportMessage.style.backgroundColor = ''; // Сброс цвета
-            reportMessage.style.color = ''; // Сброс цвета
+            // Сброс и отображение "Отправка..."
+            reportMessage.classList.remove('bg-red-200', 'text-red-800', 'bg-green-200', 'text-green-800');
+            reportMessage.classList.add('bg-blue-100', 'text-blue-800');
             reportMessage.textContent = 'Отправка...';
             reportMessage.style.display = 'block';
 
             // Получение данных формы
             const formData = {
-                email: document.getElementById('email').value,
-                type: document.getElementById('rep').value,
+                email: document.getElementById('gmail').value,
+                // Поле 'rep' используется для типа/важности (соответствует схеме PocketBase)
+                rep: document.getElementById('rep').value, 
                 description: document.getElementById('description').value,
             };
 
             // *** РЕАЛЬНЫЙ КОД POCKETBASE: ОТПРАВКА В КОЛЛЕКЦИЮ 'reports' ***
             try {
-                // ВАЖНО: Коллекция 'reports' должна быть создана в PocketBase
-                // и иметь разрешенное правило 'create' для анонимных пользователей.
+                // Если коллекция 'reports' имеет правило 'create' (для анонимов), 
+                // дополнительная аутентификация не требуется. 
+                // Мы удалили попытку аутентификации гостя, чтобы упростить код.
+                
+                // Создаем запись в коллекции 'reports'
                 const record = await pb.collection('reports').create(formData);
                 
                 console.log('Отчет успешно отправлен:', record);
 
-                reportMessage.style.backgroundColor = '#d4edda'; // Зеленый для успеха
-                reportMessage.style.color = '#155724';
+                reportMessage.classList.remove('bg-blue-100', 'text-blue-800');
+                reportMessage.classList.add('bg-green-200', 'text-green-800');
                 reportMessage.textContent = 'Спасибо! Ваше сообщение отправлено. Мы рассмотрим его в ближайшее время.';
                 reportForm.reset(); // Очистить форму
             } catch (error) {
                 // Обработка ошибки PocketBase
-                reportMessage.classList.add('error');
-                reportMessage.style.backgroundColor = '#f8d7da'; 
-                reportMessage.style.color = '#721c24';
-                reportMessage.textContent = 'Произошла ошибка при отправке. Пожалуйста, проверьте поля и попробуйте снова.';
+                reportMessage.classList.remove('bg-blue-100', 'text-blue-800', 'bg-green-200', 'text-green-800');
+                reportMessage.classList.add('bg-red-200', 'text-red-800');
+                
+                let errorMessage = 'Произошла ошибка при отправке. Пожалуйста, проверьте поля и попробуйте снова.';
+                
+                // Извлечение конкретного сообщения об ошибке из PocketBase API
+                if (error.response && error.response.data) {
+                    const errorKeys = Object.keys(error.response.data);
+                    if (errorKeys.length > 0) {
+                        const fieldErrors = error.response.data[errorKeys[0]];
+                        if (fieldErrors && fieldErrors.message) {
+                             errorMessage = `Ошибка: ${fieldErrors.message}`;
+                        }
+                    } else if (error.message) {
+                        errorMessage = `Ошибка: ${error.message}`;
+                    }
+                }
+
+                reportMessage.textContent = errorMessage;
                 console.error('Ошибка отправки в PocketBase:', error);
             }
         });
@@ -80,8 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start-button');
     if (startButton) {
         startButton.addEventListener('click', () => {
-            console.log('Начать бесплатно нажато!');
+            console.log('Начать бесплатно нажато! Перенаправление...');
         });
     }
-
 });
