@@ -47,7 +47,7 @@ migrate((db) => {
         // --- ДОБАВЛЕНО НОВОЕ ПОЛЕ ---
   		{
   			"system": false,
-  			"id": "gmail_new_field", // (Вы можете заменить "gmail_new_field" на любой уникальный ID)
+  			"id": "fffff", // (Вы можете заменить "gmail_new_field" на любой уникальный ID)
   			"name": "gmail",
   			"type": "email",
   			"options": {
