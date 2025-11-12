@@ -44,7 +44,7 @@ migrate((db) => {
         "name": "description",
         "type": "text",
         "options": {
-          "max": 0,
+          "max": 100,
           "min": 0,
           "pattern": ""
         }
