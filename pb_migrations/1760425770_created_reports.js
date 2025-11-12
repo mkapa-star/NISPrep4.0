@@ -30,11 +30,11 @@ migrate((db) => {
         "options": {
           "maxSelect": 1,
           "values": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "bug",
+            "error",
+            "log",
+            "sugg",
+            "oth"
           ]
         }
       },
