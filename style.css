@@ -1,9 +1,16 @@
-/* Общие стили */
+/* ===================================================== */
+/* 1. ОБЩИЕ ПЕРЕМЕННЫЕ И СБРОС СТИЛЕЙ */
+/* ===================================================== */
 :root {
-    --primary-color: #337500; /* Ярко-зеленый Duolingo */
- 
+    --primary-color: #337500; /* Ярко-зелёный Duolingo */
+    --accent-green: #43A047;
+    --primary-dark: #1e1e1e;
+    --light-background: #ffffff;
     --text-color: #3C3C3C;
     --bg-light: #F7F7F7;
+    --border-light: #E0E0E0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --secondary-color: #66BB6A;
 }
 
 * {
@@ -12,13 +19,19 @@
     padding: 0;
 }
 
+/* ===================================================== */
+/* 2. ОСНОВНЫЕ СТИЛИ */
+/* ===================================================== */
 body {
     font-family: 'Varela Round', sans-serif;
     color: var(--text-color);
-    background-color: white;
+    background-color: var(--light-background);
+    min-height: 100vh;
 }
 
-/* Навигация (Шапка) */
+/* ===================================================== */
+/* 3. НАВИГАЦИЯ */
+/* ===================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -44,7 +57,9 @@ body {
     font-weight: 500;
 }
 
-/* Кнопки */
+/* ===================================================== */
+/* 4. КНОПКИ */
+/* ===================================================== */
 .btn {
     padding: 10px 20px;
     border: none;
@@ -57,139 +72,68 @@ body {
 
 .btn-login {
     background-color: transparent;
-    color: var--text-color;
+    color: var(--text-color);
     border: 2px solid #E5E5E5;
     margin-right: 10px;
 }
 
-.btn-primary, .btn-signup {
+.btn-login:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-primary,
+.btn-signup {
     background-color: var(--primary-color);
-    color: rgb(255, 255, 255);
+    color: #fff;
     border-bottom: 4px solid #337500;
 }
 
-.btn-primary:hover, .btn-signup:hover {
-    background-color: #337500;
+.btn-primary:hover,
+.btn-signup:hover {
+    background-color: #2a5d00;
 }
 
-/* 1. ГЕРОЙСКИЙ БЛОК (Используем ваш CSS-фрагмент) */
+/* ===================================================== */
+/* 5. HERO-СЕКЦИЯ */
+/* ===================================================== */
 .image-container {
-    /* Стили из вашего запроса: */
     background-image: url('./maxresdefault.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 600px; /* Фиксированная высота */
+    height: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Полупрозрачный фон для читаемости текста */
-    background-color: rgba(0, 0, 0, 0.2); 
-    background-blend-mode: overlay; /* Смешивание изображения и фона */
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: overlay;
     color: white;
     text-align: center;
 }
-/* ... (Ваши существующие стили выше) ... */
 
-/* ------------------------------------- */
-/* 6. Стили страницы "Сообщить о проблеме" */
-/* ------------------------------------- */
-
-.report-section {
-    padding: 50px 5%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Начинаем сверху */
-    min-height: calc(100vh - 100px); /* Высота минус шапка и футер */
-    background-color: var(--bg-light);
-}
-
-.report-container {
-    background-color: #fefefe;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%; 
-    max-width: 600px; /* Шире, чем модальное окно, для формы */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-}
-
-.report-container h2 {
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    border-bottom: 2px solid #EEE;
-    padding-bottom: 10px;
-    font-size: 28px;
-}
-
-.report-container .subtitle {
-    margin-bottom: 25px;
-    color: #666;
-    font-size: 16px;
-}
-
-/* Переиспользуем стили input-group */
-.input-group textarea,
-.input-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: 'Varela Round', sans-serif;
-    resize: vertical; /* Разрешить вертикальное изменение размера */
-}
-
-.report-submit-btn {
-    width: 100%;
-    margin-top: 20px;
-}
-
-/* Добавьте это, чтобы кнопки входа работали */
-.btn-login:hover {
-    background-color: #f0f0f0;
-}
-
-/* Обновление стиля футера для мобильных устройств, чтобы сохранить читаемость */
-@media (max-width: 768px) {
-    footer {
-        flex-direction: column;
-        text-align: center;
-    }
-    .social-links {
-        margin-top: 10px;
-    }
-    .social-links a {
-        margin: 0 5px;
-    }
-    .feature-item {
-        flex-basis: 100%;
-    }
-}
 .hero-content {
-    max-width: 600px;margin-bottom: 300px;
+    max-width: 600px;
+    margin-bottom: 300px;
     padding: 20px;
 }
-.herop {
-    color: #333333;
-}
-h1 {
-    color: #ffffff;
 
-}
 .hero-content h1 {
     font-size: 48px;
     margin-bottom: 15px;
+    color: #fff;
+   
 }
-
 
 .hero-content p {
     font-size: 18px;
     margin-bottom: 30px;
+    color: #f2f2f2;
 }
 
-/* Выбор языка */
+/* ===================================================== */
+/* 6. ВЫБОР ЯЗЫКА */
+/* ===================================================== */
 .language-select-block {
     display: flex;
     justify-content: center;
@@ -204,8 +148,9 @@ h1 {
     font-size: 16px;
 }
 
-
-/* 2. БЛОК ПРЕИМУЩЕСТВ */
+/* ===================================================== */
+/* 7. БЛОК ПРЕИМУЩЕСТВ */
+/* ===================================================== */
 .features {
     padding: 60px 5%;
     text-align: center;
@@ -225,7 +170,7 @@ h1 {
 }
 
 .feature-item {
-    flex-basis: 30%; /* Около 30% ширины для 3 колонок */
+    flex-basis: 30%;
     padding: 20px;
     background: white;
     border-radius: 15px;
@@ -243,7 +188,9 @@ h1 {
     color: var(--primary-color);
 }
 
-/* 3. БЛОК ОТЗЫВОВ */
+/* ===================================================== */
+/* 8. ОТЗЫВЫ */
+/* ===================================================== */
 .testimonials {
     padding: 60px 5%;
     text-align: center;
@@ -266,8 +213,144 @@ h1 {
     font-style: normal;
 }
 
+/* ===================================================== */
+/* 9. СТРАНИЦА "СООБЩИТЬ О ПРОБЛЕМЕ" */
+/* ===================================================== */
+.report-section {
+    padding: 50px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 100px);
+    background-color: var(--bg-light);
+}
 
-/* 4. ФУТЕР (Подвал) */
+.report-container {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.report-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    border-bottom: 2px solid #EEE;
+    padding-bottom: 10px;
+    font-size: 28px;
+}
+
+.report-container .subtitle {
+    margin-bottom: 25px;
+    color: #666;
+    font-size: 16px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Varela Round', sans-serif;
+    resize: vertical;
+}
+
+.report-submit-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* ===================================================== */
+/* 10. МОДАЛЬНОЕ ОКНО ВХОДА */
+/* ===================================================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-top: 50px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid #EEE;
+    padding-bottom: 10px;
+}
+
+.login-submit-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.message-text {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.message-text.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* ===================================================== */
+/* 11. ФУТЕР */
+/* ===================================================== */
 footer {
     padding: 20px 5%;
     background-color: #333;
@@ -283,103 +366,30 @@ footer a {
     text-decoration: none;
     margin-left: 20px;
 }
-/* ------------------------------------- */
-/* 5. Стили Модального окна Входа (Логина) */
-/* ------------------------------------- */
 
-.modal {
-    /* Скрыто по умолчанию */
-    display: none; 
-    position: fixed; 
-    z-index: 2000; /* Поверх всего */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6); /* Темный полупрозрачный фон */
-    padding-top: 50px;
+/* ===================================================== */
+/* 12. АДАПТИВНОСТЬ */
+/* ===================================================== */
+@media (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    .social-links {
+        margin-top: 10px;
+    }
+    .social-links a {
+        margin: 0 5px;
+    }
+    .feature-item {
+        flex-basis: 100%;
+    }
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto; /* 5% сверху и центрирование */
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%; 
-    max-width: 400px; /* Ограничение ширины */
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s;
-}
-
-/* Кнопка закрытия */
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-.modal-content h2 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    border-bottom: 2px solid #EEE;
-    padding-bottom: 10px;
-}
-
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.login-submit-btn {
-    width: 100%;
-    margin-top: 10px;
-    /* Использует стили .btn .btn-primary */
-}
-
-.modal-link {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.message-text {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    display: none; /* Скрыт по умолчанию */
-}
-
-.message-text.error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-/* Анимация для появления */
+/* ===================================================== */
+/* 13. АНИМАЦИИ */
+/* ===================================================== */
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

@@ -2,42 +2,45 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/pocketbase/dist/pocketbase.umd.js"></script>
-<script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NISPrep – Подготовка в игровой форме</title>
+
+    <!-- Стили -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+    <!-- Подключение PocketBase -->
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase/dist/pocketbase.umd.js"></script>
 </head>
 <body>
 
+    <!-- Навигация -->
     <header class="navbar">
         <div class="logo">NISPrep</div>
         <nav>
             <a href="./about.html">О нас</a>
-           
         </nav>
-        
         <div class="auth-buttons">
             <button class="btn btn-login">Войти</button>
         </div>
     </header>
 
+    <!-- Hero секция -->
     <section class="hero-section image-container">
         <div class="hero-content">
-            <h1>Поступай в НИШ! <span></span></h1>
-            <div class="herop"><p></p>
-            </div>
+            <h1>Поступай в НИШ!</h1>
+           
             <div class="language-select-block">
                 <select id="language-select">
-                    <option value="en">6 класс</option>
-                    <option value="es">9-10 класс</option>
+                    <option value="class6">6 класс</option>
+                    <option value="class9">9–10 класс</option>
                 </select>
                 <button class="btn btn-primary" id="start-button">Начать</button>
             </div>
         </div>
     </section>
 
+    <!-- Блок преимуществ -->
     <section class="features">
         <h2>Почему выбирают NISPrep?</h2>
         <div class="feature-grid">
@@ -59,8 +62,7 @@
         </div>
     </section>
 
-   
-
+    <!-- Подвал -->
     <footer>
         <p>&copy; 2025 NISPrep. Все права защищены.</p>
         <div class="social-links">
@@ -70,27 +72,30 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Модальное окно входа -->
     <div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Вход в NISPrep</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="loginEmail">Email / Логин</label>
-                <input type="text" id="loginEmail" name="loginEmail" required>
-            </div>
-            <div class="input-group">
-                <label for="loginPassword">Пароль</label>
-                <input type="password" id="loginPassword" name="loginPassword" required>
-            </div>
-            <button type="submit" class="btn btn-primary login-submit-btn">Войти</button>
-            <p class="modal-link">
-                Нет аккаунта? <a href="#">Зарегистрироваться</a>
-            </p>
-        </form>
-        <p id="loginMessage" class="message-text"></p>
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Вход в NISPrep</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginEmail">Email / Логин</label>
+                    <input type="text" id="loginEmail" name="loginEmail" required>
+                </div>
+                <div class="input-group">
+                    <label for="loginPassword">Пароль</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary login-submit-btn">Войти</button>
+                <p class="modal-link">
+                    Нет аккаунта? <a href="#">Зарегистрироваться</a>
+                </p>
+            </form>
+            <p id="loginMessage" class="message-text"></p>
+        </div>
     </div>
-</div>
+
+    <!-- Подключение JS -->
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /* Общие стили */
 :root {
---primary-color: #337500; /* Ярко-зеленый Duolingo */
+--primary-color: #337500; 
  --secondary-color: #4B9FE6; /* Голубой для кнопок */
 --text-color: #3C3C3C;
  --bg-light: #F7F7F7;

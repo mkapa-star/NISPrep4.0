@@ -16,35 +16,53 @@ document.addEventListener('DOMContentLoaded', () => {
         reportMessage.textContent = 'Отправка...';
         reportMessage.className = 'message-text info';
 
-        // Собираем данные формы
+        // Получаем значения полей
+        const rep = document.getElementById('rep').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const gmail = document.getElementById('gmail').value.trim();
+
+        // Проверки формы
+        if (!rep) {
+            reportMessage.textContent = '❌ Выберите тип проблемы!';
+            reportMessage.className = 'message-text error';
+            return;
+        }
+
+        if (!description || description.length > 100) {
+            reportMessage.textContent = '❌ Описание должно быть от 1 до 100 символов';
+            reportMessage.className = 'message-text error';
+            return;
+        }
+
+        if (!gmail) {
+            reportMessage.textContent = '❌ Укажите корректный email';
+            reportMessage.className = 'message-text error';
+            return;
+        }
+
+        // Формируем данные для отправки
         const formData = {
-            gmail: document.getElementById('gmail').value.trim(),
-            rep: document.getElementById('rep').value.trim(),
-            description: document.getElementById('description').value.trim(),
+            rep: [rep], // массив с одним элементом
+            description,
+            gmail,
         };
 
-        console.log('Отправляемые данные:', formData); // Для отладки
+        console.log('Отправляемые данные:', formData);
 
         try {
-            // Отправляем данные в PocketBase (коллекция "reports")
             const record = await pb.collection('reports').create(formData);
             console.log('PocketBase ответ:', record);
 
-            // Сообщение об успехе
             reportMessage.textContent = '✅ Спасибо! Ваше сообщение отправлено.';
             reportMessage.className = 'message-text success';
-
-            // Очистить форму
             reportForm.reset();
 
-            // Через 3 секунды скрыть сообщение
             setTimeout(() => {
                 reportMessage.style.display = 'none';
             }, 3000);
 
         } catch (error) {
             console.error('Ошибка при отправке:', error);
-
             reportMessage.textContent = '❌ Ошибка отправки. Проверьте соединение или заполните все поля.';
             reportMessage.className = 'message-text error';
         }
