@@ -28,7 +28,7 @@ migrate((db) => {
         "name": "rep",
         "type": "select",
         "options": {
-          "maxSelect": 1,
+          "maxSelect": 100,
           "values": [
             "bug",
             "error",
